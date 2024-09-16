@@ -2,7 +2,7 @@ using System;
 using Crab.Resources;
 using Godot;
 
-namespace CrabComponents.addons.crabcomponents.resources;
+namespace Crab.Resources;
 
 [GlobalClass, Tool]
 public partial class ValueDisplayResource : DisplayResource

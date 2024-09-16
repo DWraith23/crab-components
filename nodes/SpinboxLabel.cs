@@ -1,4 +1,4 @@
-using CrabComponents.addons.crabcomponents.resources;
+using Crab.Resources;
 using Godot;
 using System;
 using System.Linq;
@@ -188,6 +188,8 @@ public partial class SpinboxLabel : HBoxContainer
         IconLabel.SetIconVisiblity(IconShown);
         IconLabel.Icon = Icon;
         IconLabel.SetText(Text);
+        IconLabel.SizeFlagsHorizontal = SizeFlags.ExpandFill;
+
         SpinBox.Value = Value;
         SpinBox.MinValue = MinValue;
         SpinBox.MaxValue = MaxValue;
