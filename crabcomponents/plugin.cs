@@ -1,0 +1,132 @@
+#if TOOLS
+using Godot;
+
+namespace Crab;
+[Tool]
+#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+
+public partial class plugin : EditorPlugin
+#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+
+{
+	public override void _EnterTree()
+	{
+		AddCustomType(
+			"HeaderSection",
+			"VBoxContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/HeaderSection.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"IconLabel",
+			"HBoxContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/IconLabel.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"ButtonList",
+			"VBoxContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/ButtonList.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"DisplayList",
+			"VBoxContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/DisplayList.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"DisplayPanel",
+			"PanelContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/DisplayPanel.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"ResourceButton",
+			"PanelContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/ResourceButton.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"ResourceButtonContainer",
+			"HFlowContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/ResourceButtonContainer.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"FullScene",
+			"Control",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/FullScene.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"GameSprite",
+			"Sprite2D",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/GameSprite.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"PopupScene",
+			"CenterContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/PopupScene.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"ScrollText",
+			"ScrollContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/ScrollText.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"SpinboxLabel",
+			"HBoxContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/SpinboxLabel.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"DisplayResource",
+			"Resource",
+			GD.Load<Script>("res://addons/crabcomponents/resources/DisplayResource.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"SpriteResource",
+			"Resource",
+			GD.Load<Script>("res://addons/crabcomponents/resources/SpriteResource.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"ValueDisplayResource",
+			"Resource",
+			GD.Load<Script>("res://addons/crabcomponents/resources/ValueDisplayResource.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+		AddCustomType(
+			"ResourceArray",
+			"Resource",
+			GD.Load<Script>("res://addons/crabcomponents/resources/ResourceArray.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
+	}
+
+	public override void _ExitTree()
+	{
+		RemoveCustomType("HeaderSection");
+		RemoveCustomType("IconLabel");
+		RemoveCustomType("ButtonList");
+		RemoveCustomType("DisplayList");
+		RemoveCustomType("DisplayPanel");
+		RemoveCustomType("ResourceButton");
+		RemoveCustomType("ResourceButtonContainer");
+		RemoveCustomType("FullScene");
+		RemoveCustomType("GameSprite");
+		RemoveCustomType("PopupScene");
+		RemoveCustomType("ScrollText");
+		RemoveCustomType("SpinboxLabel");
+		RemoveCustomType("DisplayResource");
+		RemoveCustomType("SpriteResource");
+		RemoveCustomType("ValueDisplayResource");
+		RemoveCustomType("ResourceArray");
+	}
+}
+#endif

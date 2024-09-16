@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=3 uid="uid://bswqlosvrbckk"]
+
+[ext_resource type="Script" path="res://addons/crabcomponents/nodes/ResourceButton.cs" id="1_vayrh"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hqhd5"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_blend = true
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+corner_detail = 5
+
+[node name="ResourceButton" type="PanelContainer"]
+theme_override_styles/panel = SubResource("StyleBoxFlat_hqhd5")
+script = ExtResource("1_vayrh")

@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxnl8j6t8eug0"]
+
+[ext_resource type="Script" path="res://addons/crabcomponents/nodes/DisplayList.cs" id="1_fy380"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bkgq8"]
+bg_color = Color(1, 0.341964, 0.288296, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hi40n"]
+bg_color = Color(0.266575, 0.266575, 0.266575, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ttl0w"]
+bg_color = Color(3.27289e-06, 0.656449, 0.862659, 1)
+
+[node name="DisplayList" type="VBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+script = ExtResource("1_fy380")
+Normal = SubResource("StyleBoxFlat_bkgq8")
+Pressed = SubResource("StyleBoxFlat_hi40n")
+Hover = SubResource("StyleBoxFlat_ttl0w")
+
+[connection signal="child_entered_tree" from="." to="." method="OnResourceAdded"]

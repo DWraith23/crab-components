@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi11ypo3n4qhg"]
+
+[ext_resource type="Script" path="res://addons/crabcomponents/nodes/DisplayPanel.cs" id="1_a8fln"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7f4ev"]
+bg_color = Color(0.223103, 0.223103, 0.223103, 1)
+
+[node name="DisplayPanel" type="PanelContainer"]
+offset_right = 136.0
+offset_bottom = 24.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7f4ev")
+script = ExtResource("1_a8fln")
+IconSize = 24

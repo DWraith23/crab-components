@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bckarjpwtcg0a"]
+
+[ext_resource type="Script" path="res://addons/crabcomponents/nodes/GameSprite.cs" id="1_3fji1"]
+
+[node name="GameSprite" type="Sprite2D"]
+script = ExtResource("1_3fji1")
