@@ -53,5 +53,4 @@ public partial class ButtonList : VBoxContainer
 
     private void OnButtonPressed(int index) =>
         EmitSignal(SignalName.ButtonPressed, index);
-
 }
