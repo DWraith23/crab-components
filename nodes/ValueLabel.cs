@@ -7,10 +7,18 @@ namespace Crab.Nodes;
 [Tool]
 public partial class ValueLabel : HBoxContainer
 {
+    public enum LabelPosition
+    {
+        Start,
+        Centered,
+        End,
+    }
+
     private Texture2D _icon { get; set; }
     private string _text { get; set; }
     private float _value { get; set; }
     private int _iconSize { get; set; } = 24;
+    private LabelPosition _valueLabelPosition { get; set; } = LabelPosition.Start;
     private ValueDisplayResource _resource { get; set; }
 
     [Export]
@@ -70,6 +78,24 @@ public partial class ValueLabel : HBoxContainer
     }
 
     [Export]
+    public LabelPosition ValueLabelPosition
+    {
+        get => _valueLabelPosition;
+        set
+        {
+            _valueLabelPosition = value;
+            if (ValueDisplayLabel is not null)
+                ValueDisplayLabel.SizeFlagsHorizontal = value switch
+                {
+                    LabelPosition.Start => SizeFlags.ShrinkBegin | SizeFlags.Expand,
+                    LabelPosition.Centered => SizeFlags.ShrinkCenter | SizeFlags.Expand,
+                    LabelPosition.End => SizeFlags.ShrinkEnd | SizeFlags.Expand,
+                    _ => SizeFlags.ShrinkBegin | SizeFlags.Expand,
+                };
+        }
+    }
+
+    [Export]
     public ValueDisplayResource Resource
     {
         get => _resource;
@@ -81,6 +107,8 @@ public partial class ValueLabel : HBoxContainer
                 ApplyResource(value);
                 _resource.Changed += () => ApplyResource(value);
                 LabelIcon.TooltipText = value.Description;
+                if (Name.ToString().Contains("ValueLabel"))
+                    Name = value.DisplayName;
             }
             else
             {
