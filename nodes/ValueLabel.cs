@@ -5,12 +5,13 @@ using System.Linq;
 namespace Crab.Nodes;
 
 [Tool]
-public partial class IconLabel : HBoxContainer
+public partial class ValueLabel : HBoxContainer
 {
     private Texture2D _icon { get; set; }
     private string _text { get; set; }
+    private float _value { get; set; }
     private int _iconSize { get; set; } = 24;
-    private DisplayResource _resource { get; set; }
+    private ValueDisplayResource _resource { get; set; }
 
     [Export]
     public Texture2D Icon
@@ -23,7 +24,7 @@ public partial class IconLabel : HBoxContainer
                 LabelIcon.Texture = value;
             if (LabelIcon is not null)
                 LabelIcon.Visible = value is not null;
-            if (Resource is not null && Resource.Icon != value)
+            if (Resource is not null && Resource.Icon != value) 
                 Resource.Icon = value;
         }
     }
@@ -35,10 +36,24 @@ public partial class IconLabel : HBoxContainer
         set
         {
             _text = value;
-            if (Label is not null)
-                Label.Text = value;
+            if (DisplayNameLabel is not null)
+                DisplayNameLabel.Text = value;
             if (Resource is not null && Resource.DisplayName != value)
                 Resource.DisplayName = value;
+        }
+    }
+
+    [Export]
+    public float Value
+    {
+        get => _value;
+        set
+        {
+            _value = value;
+            if (ValueDisplayLabel is not null)
+                ValueDisplayLabel.Text = value.ToString();
+            if (Resource is not null && Resource.Value != value)
+                Resource.Value = value;
         }
     }
 
@@ -55,22 +70,23 @@ public partial class IconLabel : HBoxContainer
     }
 
     [Export]
-    public DisplayResource Resource
+    public ValueDisplayResource Resource
     {
         get => _resource;
         set
         {
             _resource = value;
-            if (value is not null)
+            if (value is not null) 
             {
-                _resource.Changed += () => ApplyResource(value);
                 ApplyResource(value);
+                _resource.Changed += () => ApplyResource(value);
                 LabelIcon.TooltipText = value.Description;
             }
             else
             {
                 SetText(string.Empty);
                 SetIcon(null);
+                SetValue(0);
             }
         }
     }
@@ -81,7 +97,8 @@ public partial class IconLabel : HBoxContainer
             ExpandMode = TextureRect.ExpandModeEnum.IgnoreSize,
         };
 
-    public Label Label { get; set; } = new();
+    public Label DisplayNameLabel { get; set; } = new();
+    public Label ValueDisplayLabel { get; set; } = new();
 
     public override void _Ready()
     {
@@ -89,7 +106,8 @@ public partial class IconLabel : HBoxContainer
         GetChildren().ToList()
             .ForEach(RemoveChild);
         AddChild(LabelIcon, false, InternalMode.Front);
-        AddChild(Label, false, InternalMode.Front);
+        AddChild(DisplayNameLabel, false, InternalMode.Front);
+        AddChild(ValueDisplayLabel, false, InternalMode.Front);
     }
 
     public override void _EnterTree()
@@ -105,11 +123,13 @@ public partial class IconLabel : HBoxContainer
 
     public void SetText(string text) => Text = text;
     public void SetIcon(Texture2D icon) => Icon = icon;
+    public void SetValue(float value) => Value = value;
     public void SetIconVisiblity(bool visible) => LabelIcon.Visible = visible;
 
-    public void ApplyResource(DisplayResource resource)
+    public void ApplyResource(ValueDisplayResource resource)
     {
         SetText(resource.DisplayName);
         SetIcon(resource.Icon);
+        SetValue(resource.Value);
     }
 }

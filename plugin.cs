@@ -107,6 +107,12 @@ public partial class plugin : EditorPlugin
 			GD.Load<Script>("res://addons/crabcomponents/resources/ResourceArray.cs"),
 			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
 		);
+		AddCustomType(
+			"ValueLabel",
+			"HBoxContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/ValueLabel.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
 	}
 
 	public override void _ExitTree()
@@ -127,6 +133,7 @@ public partial class plugin : EditorPlugin
 		RemoveCustomType("SpriteResource");
 		RemoveCustomType("ValueDisplayResource");
 		RemoveCustomType("ResourceArray");
+		RemoveCustomType("ValueLabel");
 	}
 }
 #endif
