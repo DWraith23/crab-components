@@ -198,6 +198,7 @@ public partial class SpinboxLabel : HBoxContainer
         SpinBox.Suffix = Suffix;
         SpinBox.Rounded = Round;
         SpinBox.Editable = CanEdit;
+        SpinBox.ValueChanged += OnValueChanged;
         
         SpinBox.Alignment = HorizontalAlignment.Center;
         AddChild(IconLabel, false, InternalMode.Front);
@@ -210,14 +211,18 @@ public partial class SpinboxLabel : HBoxContainer
 
     private float SetSpinboxValue(float value)
     {
-            var result = Math.Clamp(value, MinValue, MaxValue);
-            result -= result % Step;
-            if (Round) result = MathF.Round(result, 0);
-            _value = result;
-            SpinBox.Value = result;
-            return result;
+        if (value == Value) return value;
+        var result = Math.Clamp(value, MinValue, MaxValue);
+        result -= result % Step;
+        if (Round) result = MathF.Round(result, 0);
+        _value = result;
+        SpinBox.Value = result;
+        return result;
     }
 
-    private void OnValueChanged() =>
+    private void OnValueChanged(double value)
+    {
+        Value = (float)value;
         EmitSignal(SignalName.ValueChanged, Value);
+    }
 }
