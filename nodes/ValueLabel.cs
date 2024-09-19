@@ -20,7 +20,12 @@ public partial class ValueLabel : HBoxContainer
     private int _iconSize { get; set; } = 24;
     private LabelPosition _valueLabelPosition { get; set; } = LabelPosition.Start;
     private ValueDisplayResource _resource { get; set; }
+    private bool _textVisible { get; set; } = true;
+    private bool _iconVisible { get; set; } = true;
+    private bool _valueVisible { get; set; } = true;
 
+
+    #region  Exports
     [Export]
     public Texture2D Icon
     {
@@ -119,6 +124,45 @@ public partial class ValueLabel : HBoxContainer
         }
     }
 
+    [Export]
+    public bool TextVisible
+    {
+        get => _textVisible;
+        set
+        {
+            _textVisible = value;
+            if (DisplayNameLabel is not null)
+                SetTextVisibility(value);
+        }
+    }
+
+    [Export]
+    public bool IconVisible
+    {
+        get => _iconVisible;
+        set
+        {
+            _iconVisible = value;
+            if (LabelIcon is not null)
+                SetIconVisiblity(value);
+        }
+    }
+
+    [Export]
+    public bool ValueVisible
+    {
+        get => _valueVisible;
+        set
+        {
+            _valueVisible = value;
+            if (ValueDisplayLabel is not null)
+                SetValueVisibility(value);
+        }
+    }
+    
+
+    #endregion
+
     private TextureRect LabelIcon  {get; set; } = new()
         {
             CustomMinimumSize = new Vector2(24f, 24f),
@@ -152,7 +196,9 @@ public partial class ValueLabel : HBoxContainer
     public void SetText(string text) => Text = text;
     public void SetIcon(Texture2D icon) => Icon = icon;
     public void SetValue(float value) => Value = value;
+    public void SetTextVisibility(bool visible) => DisplayNameLabel.Visible = visible;
     public void SetIconVisiblity(bool visible) => LabelIcon.Visible = visible;
+    public void SetValueVisibility(bool visible) => ValueDisplayLabel.Visible = visible;
 
     public void ApplyResource(ValueDisplayResource resource)
     {
