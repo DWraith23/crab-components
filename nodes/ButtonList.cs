@@ -26,6 +26,17 @@ public partial class ButtonList : VBoxContainer
             .Where(child => child is Button).Cast<Button>()
             .ToList();
 
+    public override void _Ready()
+    {
+        UpdateButtons();
+    }
+
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        Buttons.ForEach(RemoveButton);
+    }
+
     private void UpdateButtons()
     {
         Buttons.ForEach(RemoveButton);
@@ -46,7 +57,6 @@ public partial class ButtonList : VBoxContainer
 
     private void RemoveButton(Button button)
     {
-        button.Pressed -= () => OnButtonPressed(GetIndex(true));
         RemoveChild(button);
         button.QueueFree();
     }
