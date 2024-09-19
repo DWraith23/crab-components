@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using Godot;
 
 namespace Crab.Nodes;
@@ -18,6 +19,8 @@ public partial class IconMenu : FlowContainer
 	private int _borderCornerRadius;
 	private bool _borderBlend;
 
+
+	#region Exports
 	[Export]
 	private Texture2D[] Icons
 	{
@@ -110,6 +113,8 @@ public partial class IconMenu : FlowContainer
 		}
 	} 
 
+	#endregion
+
     public override void _Ready()
     {
         base._Ready();
@@ -122,7 +127,7 @@ public partial class IconMenu : FlowContainer
 		GetChildren(true).ToList()
                .ForEach(child =>
 			   {
-				OrphanChild(child); 
+				if (child.GetParent() is not null) child.GetParent().RemoveChild(child);
 				child.QueueFree();
 			   });
 		foreach(var icon in icons)
@@ -184,15 +189,14 @@ public partial class IconMenu : FlowContainer
 		panel.AddThemeStyleboxOverride("panel", stylebox);
 	}
 
-
+	#region Signal Methods
 	private async void OnButtonPressed(int index, TextureButton button)
 	{
-		GD.Print($"Button at index {index} pressed.");
 		var panel = button.GetParent<PanelContainer>();
 		UpdateBorderColor(panel, _borderColorPressed);
 		EmitSignal(SignalName.IconPressed, index);
-		await Delay(0.25f);
-		if (panel.IsValid()) UpdateBorderColor(panel, _borderColorHover);
+		await Task.Delay(250);
+		if (panel is not null && IsInstanceValid(panel)) UpdateBorderColor(panel, _borderColorHover);
 	}
 
 	private void OnButtonMousedOver(TextureButton button)
@@ -206,6 +210,9 @@ public partial class IconMenu : FlowContainer
 		var panel = button.GetParent<PanelContainer>();
 		UpdateBorderColor(panel, _borderColorNormal);
 	}
+	#endregion
+
+	#region Set Methods
 
 	public void SetIconSize(int value)
 	{
@@ -276,4 +283,5 @@ public partial class IconMenu : FlowContainer
 			child.AddThemeStyleboxOverride("panel", stylebox);
 		}
 	}
+	#endregion
 }

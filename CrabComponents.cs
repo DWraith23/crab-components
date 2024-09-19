@@ -5,7 +5,7 @@ namespace Crab;
 [Tool]
 #pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
 
-public partial class plugin : EditorPlugin
+public partial class CrabComponents : EditorPlugin
 #pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
 
 {
@@ -113,6 +113,12 @@ public partial class plugin : EditorPlugin
 			GD.Load<Script>("res://addons/crabcomponents/nodes/ValueLabel.cs"),
 			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
 		);
+		AddCustomType(
+			"IconMenu",
+			"FlowContainer",
+			GD.Load<Script>("res://addons/crabcomponents/nodes/IconMenu.cs"),
+			GD.Load<Texture2D>("res://addons/crabcomponents/crab.png")
+		);
 	}
 
 	public override void _ExitTree()
@@ -134,6 +140,7 @@ public partial class plugin : EditorPlugin
 		RemoveCustomType("ValueDisplayResource");
 		RemoveCustomType("ResourceArray");
 		RemoveCustomType("ValueLabel");
+		RemoveCustomType("IconMenu");
 	}
 }
 #endif
