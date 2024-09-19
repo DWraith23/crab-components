@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0lcjv0088yhx"]
+
+[ext_resource type="Script" path="res://addons/crabcomponents/nodes/IconMenu.cs" id="1_mjrj7"]
+
+[node name="IconMenu" type="FlowContainer"]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+script = ExtResource("1_mjrj7")
+Icons = []
