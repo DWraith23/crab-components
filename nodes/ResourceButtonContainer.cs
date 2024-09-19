@@ -68,9 +68,11 @@ public partial class ResourceButtonContainer : HFlowContainer
 
     private void OnResourceButtonRemoved(Node node)
     {
-        if (node is not ResourceButton button) return;
+        if (node is not ResourceButton button || !IsInstanceValid(button)) return;
         button.ButtonPressed -= OnButtonPressed;
         button.ButtonMousedOver -= OnButtonMousedOver;
         button.ButtonMousedAway -= OnButtonMousedAway;
     }
+
+    public DisplayResource GetResourceAtIndex(int index) => GetChild<ResourceButton>(index).Resource;
 }
