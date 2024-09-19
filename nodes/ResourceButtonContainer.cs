@@ -20,8 +20,16 @@ public partial class ResourceButtonContainer : HFlowContainer
 
     public void Populate(Godot.Collections.Array<DisplayResource> resources, int iconSize = 64)
     {
+        Clear();
         resources.ToList()
             .ForEach(resource => AddResource(resource, iconSize));
+    }
+
+    public void Clear()
+    {
+        GetChildren().OfType<ResourceButton>()
+            .ToList()
+            .ForEach(button => RemoveResource(button.Resource));
     }
 
     public void AddResource(DisplayResource resource, int iconSize = 64)
