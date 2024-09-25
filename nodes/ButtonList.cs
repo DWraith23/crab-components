@@ -34,7 +34,6 @@ public partial class ButtonList : VBoxContainer
     public override void _ExitTree()
     {
         base._ExitTree();
-        Buttons.ForEach(RemoveButton);
     }
 
     private void UpdateButtons()
