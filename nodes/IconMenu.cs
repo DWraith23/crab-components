@@ -118,7 +118,8 @@ public partial class IconMenu : FlowContainer
     public override void _Ready()
     {
         base._Ready();
-		UpdateIcons(_icons);
+		if (_icons is not null)
+			UpdateIcons(_icons);
     }
 
 

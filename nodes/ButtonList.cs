@@ -40,8 +40,8 @@ public partial class ButtonList : VBoxContainer
     private void UpdateButtons()
     {
         Buttons.ForEach(RemoveButton);
-        Names.ToList()
-            .ForEach(AddButton);
+        Names?.ToList()
+                .ForEach(AddButton);
     }
 
     private void AddButton(string name)
