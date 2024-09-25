@@ -109,6 +109,12 @@ public partial class IconLabel : HBoxContainer
 
     public void ApplyResource(DisplayResource resource)
     {
+        if (resource is null)
+        {
+            SetText(string.Empty);
+            SetIcon(null);
+            return;
+        }
         SetText(resource.DisplayName);
         SetIcon(resource.Icon);
     }
