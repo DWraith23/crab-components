@@ -1,5 +1,4 @@
 using System;
-using Crab.Resources;
 using Godot;
 
 namespace Crab.Resources;
