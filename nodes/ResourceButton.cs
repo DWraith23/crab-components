@@ -120,6 +120,8 @@ public partial class ResourceButton : PanelContainer
         IconSize = _iconSize;
 
         Button.GuiInput += OnGuiInput;
+        Button.MouseEntered += OnButtonMousedOver;
+        Button.MouseExited += OnButtonMousedAway;
         AddChild(Button, false, InternalMode.Front);
     }
 
@@ -161,17 +163,6 @@ public partial class ResourceButton : PanelContainer
             else if (mouseButton.ButtonIndex == MouseButton.Right)
             {
                 OnButtonRightClicked();
-            }
-        }
-        else if (@event is InputEventMouseMotion mouseMotion)
-        {
-            if (Button.GetGlobalRect().HasPoint(mouseMotion.Position))
-            {
-                OnButtonMousedOver();
-            }
-            else
-            {
-                OnButtonMousedAway();
             }
         }
     }
