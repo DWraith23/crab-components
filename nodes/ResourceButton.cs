@@ -9,6 +9,7 @@ public partial class ResourceButton : PanelContainer
     [Signal] public delegate void ButtonPressedEventHandler(DisplayResource resource);
     [Signal] public delegate void ButtonMousedOverEventHandler(DisplayResource resource);
     [Signal] public delegate void ButtonMousedAwayEventHandler();
+    [Signal] public delegate void ButtonRightClickedEventHandler(DisplayResource resource);
 
     private DisplayResource _resource { get; set; }
     private int _iconSize { get; set; } = 64;
@@ -118,9 +119,7 @@ public partial class ResourceButton : PanelContainer
         SetDefaultStylebox();
         IconSize = _iconSize;
 
-        Button.Pressed += OnButtonPressed;
-        Button.MouseEntered += OnButtonMousedOver;
-        Button.MouseExited += OnButtonMousedAway;
+        Button.GuiInput += OnGuiInput;
         AddChild(Button, false, InternalMode.Front);
     }
 
@@ -147,6 +146,33 @@ public partial class ResourceButton : PanelContainer
     }
     
     private void OnButtonPressed() => EmitSignal(SignalName.ButtonPressed, Resource);
+    private void OnButtonRightClicked() => EmitSignal(SignalName.ButtonRightClicked, Resource);
     private void OnButtonMousedOver() => EmitSignal(SignalName.ButtonMousedOver, Resource);
     private void OnButtonMousedAway() => EmitSignal(SignalName.ButtonMousedAway);
+
+    private void OnGuiInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mouseButton)
+        {
+            if (mouseButton.ButtonIndex == MouseButton.Left)
+            {
+                OnButtonPressed();
+            }
+            else if (mouseButton.ButtonIndex == MouseButton.Right)
+            {
+                OnButtonRightClicked();
+            }
+        }
+        else if (@event is InputEventMouseMotion mouseMotion)
+        {
+            if (Button.GetGlobalRect().HasPoint(mouseMotion.Position))
+            {
+                OnButtonMousedOver();
+            }
+            else
+            {
+                OnButtonMousedAway();
+            }
+        }
+    }
 }

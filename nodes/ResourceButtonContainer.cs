@@ -10,6 +10,7 @@ public partial class ResourceButtonContainer : HFlowContainer
     [Signal] public delegate void ButtonPressedEventHandler(DisplayResource resource);
     [Signal] public delegate void ButtonMousedOverEventHandler(DisplayResource resource);
     [Signal] public delegate void ButtonMousedAwayEventHandler();
+    [Signal] public delegate void ButtonRightClickedEventHandler(DisplayResource resource);
 
     public override void _Ready()
     {
@@ -58,12 +59,16 @@ public partial class ResourceButtonContainer : HFlowContainer
     private void OnButtonMousedAway() =>
         EmitSignal(SignalName.ButtonMousedAway);
 
+    private void OnButtonRightClicked(DisplayResource resource) =>
+        EmitSignal(SignalName.ButtonRightClicked, resource);
+
     private void OnResourceButtonAdded(Node node)
     {
         if (node is not ResourceButton button) return;
         button.ButtonPressed += OnButtonPressed;
         button.ButtonMousedOver += OnButtonMousedOver;
         button.ButtonMousedAway += OnButtonMousedAway;
+        button.ButtonRightClicked += OnButtonRightClicked;
     }
 
     private void OnResourceButtonRemoved(Node node)
@@ -72,6 +77,7 @@ public partial class ResourceButtonContainer : HFlowContainer
         button.ButtonPressed -= OnButtonPressed;
         button.ButtonMousedOver -= OnButtonMousedOver;
         button.ButtonMousedAway -= OnButtonMousedAway;
+        button.ButtonRightClicked -= OnButtonRightClicked;
     }
 
     public DisplayResource GetResourceAtIndex(int index) => GetChild<ResourceButton>(index).Resource;
