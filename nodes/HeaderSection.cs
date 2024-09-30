@@ -22,12 +22,14 @@ public partial class HeaderSection : VBoxContainer
         }
     }
 
-    private Label Header {get; set; } = new();
+    private Label Header {get; set; }
     private HSeparator Seperator => new();
 
     public override void _Ready()
     {
         base._Ready();
+        Header = new Label();
+        Header.Text = HeaderText;
         Header.AddThemeFontSizeOverride("font_size", 24);
         Header.SizeFlagsHorizontal = SizeFlags.ShrinkCenter;
         AddChild(Header, false, InternalMode.Front);

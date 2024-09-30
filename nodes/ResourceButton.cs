@@ -6,6 +6,25 @@ namespace Crab.Nodes;
 [Tool]
 public partial class ResourceButton : PanelContainer
 {
+    /// <summary>
+    /// Controls how the ButtonPressed and ButtonRightClicked signals are emitted.
+    /// </summary>
+    public enum ButtonPressType
+    {
+        /// <summary>
+        /// Emits the signal when the button is pressed.
+        /// </summary>
+        Pressed,
+        /// <summary>
+        /// Emits the signal when the button is released.
+        /// </summary>
+        Released,
+        /// <summary>
+        /// Emits the signal when the button is pressed and released.
+        /// </summary>
+        Both,
+    }
+
     [Signal] public delegate void ButtonPressedEventHandler(DisplayResource resource);
     [Signal] public delegate void ButtonMousedOverEventHandler(DisplayResource resource);
     [Signal] public delegate void ButtonMousedAwayEventHandler();
@@ -105,7 +124,10 @@ public partial class ResourceButton : PanelContainer
             }
         }
     }
-    
+
+    [Export] public ButtonPressType LeftClickButtonPressType { get; set; } = ButtonPressType.Released;
+    [Export] public ButtonPressType RightClickButtonPressType { get; set; } = ButtonPressType.Both;
+
     private TextureButton Button = new()
     {
         IgnoreTextureSize = true,
@@ -158,11 +180,33 @@ public partial class ResourceButton : PanelContainer
         {
             if (mouseButton.ButtonIndex == MouseButton.Left)
             {
-                OnButtonPressed();
+                if (LeftClickButtonPressType == ButtonPressType.Pressed && mouseButton.Pressed)
+                {
+                    OnButtonPressed();
+                }
+                else if (LeftClickButtonPressType == ButtonPressType.Released && !mouseButton.Pressed)
+                {
+                    OnButtonPressed();
+                }
+                else if (LeftClickButtonPressType == ButtonPressType.Both)
+                {
+                    OnButtonPressed();
+                }
             }
             else if (mouseButton.ButtonIndex == MouseButton.Right)
             {
-                OnButtonRightClicked();
+                if (RightClickButtonPressType == ButtonPressType.Pressed && mouseButton.Pressed)
+                {
+                    OnButtonRightClicked();
+                }
+                else if (RightClickButtonPressType == ButtonPressType.Released && !mouseButton.Pressed)
+                {
+                    OnButtonRightClicked();
+                }
+                else if (RightClickButtonPressType == ButtonPressType.Both)
+                {
+                    OnButtonRightClicked();
+                }
             }
         }
     }
