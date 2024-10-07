@@ -34,6 +34,7 @@ public partial class ResourceButton : PanelContainer
     private int _iconSize { get; set; } = 64;
     private Color _borderColor { get; set; }
     private Color _pressedBorderColor { get; set; }
+    private bool _isEnabled { get; set; } = true;
     private bool _isPressed { get; set; } = false;
 
     [Export]
@@ -101,6 +102,17 @@ public partial class ResourceButton : PanelContainer
                 styleBox.BorderColor = value;
                 AddThemeStyleboxOverride("panel", styleBox);
             }
+        }
+    }
+
+    [Export]
+    public bool IsEnabled
+    {
+        get => _isEnabled;
+        set
+        {
+            _isEnabled = value;
+            Modulate = value ? Color.FromHtml("ffffff") : Color.FromHtml("848484");
         }
     }
 
@@ -176,6 +188,8 @@ public partial class ResourceButton : PanelContainer
 
     private void OnGuiInput(InputEvent @event)
     {
+        if (!IsEnabled) return;
+
         if (@event is InputEventMouseButton mouseButton)
         {
             if (mouseButton.ButtonIndex == MouseButton.Left)

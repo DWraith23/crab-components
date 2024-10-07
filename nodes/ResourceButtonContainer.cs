@@ -33,11 +33,12 @@ public partial class ResourceButtonContainer : HFlowContainer
             .ForEach(button => RemoveResource(button.Resource));
     }
 
-    public void AddResource(DisplayResource resource, int iconSize = 64)
+    public void AddResource(DisplayResource resource, int iconSize = 64, bool enabled = true)
     {
         var button = new ResourceButton
         {
             Resource = resource,
+            IsEnabled = enabled,
         };
         button.SetIconSize(iconSize);
         AddChild(button);
