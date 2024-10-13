@@ -188,12 +188,12 @@ public partial class ResourceButton : PanelContainer
 
     private void OnGuiInput(InputEvent @event)
     {
-        if (!IsEnabled) return;
 
         if (@event is InputEventMouseButton mouseButton)
         {
             if (mouseButton.ButtonIndex == MouseButton.Left)
             {
+                if (!IsEnabled) return;
                 if (LeftClickButtonPressType == ButtonPressType.Pressed && mouseButton.Pressed)
                 {
                     OnButtonPressed();
