@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://addons/crabcomponents/nodes/ResourceButton.cs" id="1_vayrh"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hhngt"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ic77r"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
@@ -20,6 +20,8 @@ corner_radius_bottom_left = 16
 corner_detail = 5
 
 [node name="ResourceButton" type="PanelContainer"]
-theme_override_styles/panel = SubResource("StyleBoxFlat_hhngt")
+focus_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ic77r")
 script = ExtResource("1_vayrh")
 IconSize = 64
+IsEnabled = true
