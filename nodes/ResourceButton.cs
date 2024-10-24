@@ -34,8 +34,11 @@ public partial class ResourceButton : PanelContainer
     private int _iconSize { get; set; } = 64;
     private Color _borderColor { get; set; }
     private Color _pressedBorderColor { get; set; }
+    private Color _focusedBorderColor { get; set; }
     private bool _isEnabled { get; set; } = true;
     private bool _isPressed { get; set; } = false;
+    private bool _isFocused { get; set; } = false;
+
 
     [Export]
     public DisplayResource Resource
@@ -69,7 +72,7 @@ public partial class ResourceButton : PanelContainer
     }
 
     [Export]
-    private Color BorderColor
+    public Color BorderColor
     {
         get => _borderColor;
         set
@@ -90,13 +93,29 @@ public partial class ResourceButton : PanelContainer
     }
 
     [Export]
-    private Color PressedBorderColor
+    public Color PressedBorderColor
     {
         get => _pressedBorderColor;
         set
         {
             _pressedBorderColor = value;
             if (IsPressed) 
+            {
+                var styleBox = GetThemeStylebox("panel").Duplicate() as StyleBoxFlat;
+                styleBox.BorderColor = value;
+                AddThemeStyleboxOverride("panel", styleBox);
+            }
+        }
+    }
+
+    [Export]
+    public Color FocusedBorderColor
+    {
+        get => _focusedBorderColor;
+        set
+        {
+            _focusedBorderColor = value;
+            if (IsFocused) 
             {
                 var styleBox = GetThemeStylebox("panel").Duplicate() as StyleBoxFlat;
                 styleBox.BorderColor = value;
@@ -117,7 +136,7 @@ public partial class ResourceButton : PanelContainer
     }
 
     [Export]
-    private bool IsPressed
+    public bool IsPressed
     {
         get => _isPressed;
         set
@@ -127,6 +146,27 @@ public partial class ResourceButton : PanelContainer
             {
                 var styleBox = GetThemeStylebox("panel").Duplicate() as StyleBoxFlat;
                 styleBox.BorderColor = PressedBorderColor;
+                AddThemeStyleboxOverride("panel", styleBox);
+            }
+            else
+            {
+                RemoveThemeStyleboxOverride("panel");
+                SetDefaultStylebox();
+            }
+        }
+    }
+
+    [Export]
+    public bool IsFocused
+    {
+        get => _isFocused;
+        set
+        {
+            _isFocused = value;
+            if (value)
+            {
+                var styleBox = GetThemeStylebox("panel").Duplicate() as StyleBoxFlat;
+                styleBox.BorderColor = FocusedBorderColor;
                 AddThemeStyleboxOverride("panel", styleBox);
             }
             else
@@ -157,6 +197,10 @@ public partial class ResourceButton : PanelContainer
         Button.MouseEntered += OnButtonMousedOver;
         Button.MouseExited += OnButtonMousedAway;
         AddChild(Button, false, InternalMode.Front);
+
+        FocusEntered += FocusOn;
+        FocusExited += FocusAway;
+        FocusMode = FocusModeEnum.All;
     }
 
     public void SetIconSize(int size) => Button.CustomMinimumSize = new Vector2(size, size);
@@ -223,5 +267,17 @@ public partial class ResourceButton : PanelContainer
                 }
             }
         }
+    }
+
+    public void FocusOn()
+    {
+        IsFocused = true;
+        GrabFocus();
+        GD.Print($"|    Focused on {Resource.DisplayName}");
+    }
+
+    public void FocusAway()
+    {
+        IsFocused = false;
     }
 }
