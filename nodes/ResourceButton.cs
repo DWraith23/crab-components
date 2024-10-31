@@ -273,7 +273,6 @@ public partial class ResourceButton : PanelContainer
     {
         IsFocused = true;
         GrabFocus();
-        GD.Print($"|    Focused on {Resource.DisplayName}");
     }
 
     public void FocusAway()
